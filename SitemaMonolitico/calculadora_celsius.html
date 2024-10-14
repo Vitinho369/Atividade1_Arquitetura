@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Conversor de temperatura</title>
+</head>
+
+<body>
+    <label for="celsius">Digite a temperatura em celsius: </label>
+    <input type="text" id="celsius" placeholder="Celsius">
+    <button onclick="converter()">Convertir</button>
+    <p id="fahrenheit"></p>
+
+    <br>
+    <h3>Histórico de conversões</h3>
+    <p id="conversoes"></p>
+</body>
+<script>
+    let historico = JSON.parse(localStorage.getItem('historico')) || [];
+    let converter = () => {
+        let celsius = document.getElementById('celsius').value;
+        let fahrenheit = (celsius * 9 / 5) + 32;
+        document.getElementById('fahrenheit').innerHTML = 'A temperatura em fahrenheit é: ' + fahrenheit;
+        historico.push({ celsius, fahrenheit });
+        localStorage.setItem('historico', JSON.stringify(historico));
+        exibirHistorico();
+    }
+
+    let exibirHistorico = () => {
+        document.getElementById('conversoes').innerHTML = '';
+        historico.forEach((item) => {
+            document.getElementById('conversoes').innerHTML += `Celsius: ${item.celsius} - Fahrenheit: ${item.fahrenheit} <br>`;
+        });
+    }
+
+    exibirHistorico();
+</script>
+
+</html>
